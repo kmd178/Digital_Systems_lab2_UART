@@ -2,5 +2,7 @@
 !*.v
 !*.bit
 !*.ucf
+!*.docx
+!*.xise
 !README.md
 !.gitignore
