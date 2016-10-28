@@ -1,0 +1,2 @@
+# Digital_Systems_lab2_UART
+Implementation of serial data transfer between two distinct systems running different clocks using the Universal Asynchronous Receiver&amp;Transmitter protocol. The system consists of a UART transmitter and a UART reciever with a single serial connection between them. The bitstream transmitted is utilized by the reciever to drive the 7segment display implemented in the previous assignment.
