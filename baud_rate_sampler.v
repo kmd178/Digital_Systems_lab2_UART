@@ -1,21 +1,23 @@
-module baud_rate_sampler(
+module baud_rate_sampler(  ///have to implement different for reciever and transmitter, with different adders and clocks.
 		input reset,
 		input clk,
 		input [2:0] baud_select,
 		output sample_ENABLE
     );
-		
-		//parameter 
+	 
+		//We assume assume that a maximum possible FPGA clock used is 1ghz.(30bits)
 		parameter systemclockfrequency= 50000000;  //must be changed according to the FPGA system used.
-		parameter Maximum_Baud_Rate= 115200;
+		parameter Clocks_Baud_Rate_8= systemclockfrequency/115200; //The floating part of the division is lost, leading to an error in the calculation of the actual rate
+		parameter Clocks_Baud_Rate_7= systemclockfrequency/57600;  //The greater the bitrate, the bigger the error leading to an out of sync function
+		parameter Clocks_Baud_Rate_6= systemclockfrequency/38400;
+		parameter Clocks_Baud_Rate_5= systemclockfrequency/19200;
+		parameter Clocks_Baud_Rate_4= systemclockfrequency/9600;
+		parameter Clocks_Baud_Rate_3= systemclockfrequency/4800;
+		parameter Clocks_Baud_Rate_2= systemclockfrequency/1200;
+		parameter Clocks_Baud_Rate_1= systemclockfrequency/300; //The number generated here is the largest and judges the bit width of the counter needed to calculate clocks
+		//We assume assume that a maximum possible FPGA clock used is 1ghz. Divided with 300 that needs 22bits in the counter
 		
-		wire clk_count_rate_x1= counter[parameter[1]:0]
-		wire clk_count_rate_x2= counter[parameter[2]:0]
-		wire clk_count_rate_x3= counter[parameter[3]:0]
-		//
-		wire clk_count_rate_x16= counter[parameter[16]:0]
-		
-		reg counter[parameter[16]:0];
+		reg counter[21:0];
 		wire reset_counter;
 		reg baud_select_prev_state;
 		
@@ -31,6 +33,7 @@ module baud_rate_sampler(
 		//if baud_select changes i will need to reset my counter in the next sampling cycle.
 		assign reset_counter= baud_select^baud_select_prev_state; //assign reset_counter= (baud_select == ~baud_select_prev_state) ? 1b'1 : 1b'0;
 		
+		
 		always @(posedge clk, posedge reset) 
 			begin
 				if (reset)
@@ -40,16 +43,37 @@ module baud_rate_sampler(
 				else 
 					counter<=counter+ 1'b1;
 			end
-			
-	
-			
-			always @(posedge clk)
-				case(counter)
-					22: sample_ENABLE=&clk_count_rate_x1;
-					20: sample_ENABLE=&clk_count_rate_x2;
-					18: sample_ENABLE=&clk_count_rate_x3;
-					//
-					6: sample_ENABLE=&clk_count_rate_x16;
-				endcase
+		
+//Project has Baud_rate preconfigured before the transfer of the bits.
+//In case i want Async Baud_rate change: (This is necessary for optional scaling of the baud_rate during the transfer of a bitstream)	
+//		//Baud_select flip flop, (i am not sure if i should use clock or sample_ENABLE)
+//		always @(posedge sample_ENABLE, posedge reset) 
+//			begin
+//				if (reset)
+//					baud_select_prev_state<=0;	
+//				else 
+//					baud_select_prev_state<=baud_select;
+//			end		
+//Smarter implementation more error.	Adding baudrate_subdivision instead of 1, 
+//the residual number is  accumulating and increased the clocks necessary by 1 when its necessary to keep the division intact.
+//		always @(posedge clk, posedge reset) 
+//			begin
+//				if (reset)
+//					counter<=0;	
+//				else if (reset_counter)
+//					counter<=0;
+//				else 
+//					{sample_ENABLE,counter}<= counter+ baudrate_subdivision;
+//			end
+//	
+//			
+//			always @(posedge clk)
+//				case(baud_select_prev_state)
+//					0: baudrate_subdivision= 300*2^18/systemclockfrequency;
+//					1: baudrate_subdivision= 1200*2^18/systemclockfrequency;
+//					2: baudrate_subdivision= 4800*2^18/systemclockfrequency;
+//					//
+//					7: baudrate_subdivision= 115200*2^18/systemclockfrequency;
+//				endcase
 
 endmodule
