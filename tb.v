@@ -3,11 +3,12 @@
 module tb;
 
 reg reset,clk,BTN2;
-wire a,b,c,d,e,f,g,dp,CLKDV;
+reg [2:0] baud_select;
+//wire a,b,c,d,e,f,g,dp,CLKDV;
 
-FourDigitLEDdriver sys0(
-	.reset(reset),
-	.clk(clk),
+//FourDigitLEDdriver sys0(
+//	.reset(reset),
+//	.clk(clk),
 //	.BTN2(BTN2),
 //	.an3(an3),
 //	.an2(an2),
@@ -24,16 +25,38 @@ FourDigitLEDdriver sys0(
 //	.CLKDV(CLKDV),
 //	.stabilizedRESET(stabilizedRESET),
 //	.stabilizedButton(stabilizedButton)
+//);//
+
+
+systemUART sys0(
+	.reset(reset),
+	.clk(clk),
+	.baud_select(baud_select),
+	.sample_ENABLE(sample_ENABLE)
 );
-
-
-
+	
 initial begin
 	clk=0;
 	reset = 1;
-			
+	baud_select=0;
 	#100 reset = 0;
-
+	
+	#1000 reset = 1;
+	baud_select=2;
+	#100 reset = 0;
+	
+	#1000 reset = 1;
+	baud_select=3;
+	#100 reset = 0;
+	
+		
+	#1000 reset = 1;
+	baud_select=4;
+	#100 reset = 0;
+	
+	#1000 reset = 1;
+	baud_select=5;
+	#100 reset = 0;
 	
 	#10000 $finish;	
 
