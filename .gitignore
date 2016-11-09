@@ -1,5 +1,7 @@
 *
 !*.v
+!*.pdf
+!*.png
 !*.bit
 !*.ucf
 !*.docx

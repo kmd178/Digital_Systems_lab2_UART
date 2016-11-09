@@ -2,8 +2,10 @@ module baud_rate_sampler(  ///have to implement different for reciever and trans
 		input reset,
 		input clk,
 		input [2:0] baud_select,
-		output sample_ENABLE
+		output reg sample_ENABLE
     );
+	 
+
 	 
 		//We assume assume that a maximum possible FPGA clock used is 1ghz.(30bits)
 //		parameter systemclockfrequency= 50000000;  //must be changed according to the FPGA system used.
@@ -28,7 +30,7 @@ module baud_rate_sampler(  ///have to implement different for reciever and trans
 //		parameter Clocks_Baud_Rate_2= 001010001011000011;   //41666.6666667
 //		parameter Clocks_Baud_Rate_1= 101000101100001011; 	 //166666.666667 
 		reg [17:0] counter; // TOTAL OF 18 BINARY CHARACTERS TO represent integer part of Clocks_Baud_Rate_1
-		reg [17:0] baud_select_table [7:0];
+		//reg [17:0] baud_select_table [7:0];
 		
 		always @(posedge clk, posedge reset) 
 			begin
@@ -40,35 +42,39 @@ module baud_rate_sampler(  ///have to implement different for reciever and trans
 					counter<=counter+ 1'b1;
 			end
 		
-		wire sample_Enable = & (counter ^~ baud_select_table[baud_select]) ;
+//		wire sample_Enable = & (counter ^~ baud_select_table[baud_select]) ;
 	
 		// why cant i assign memory using always @(*); 
+		// because it referes to all possible left hand side changes, which i dont have any because they are constants, so which block is never accesed.
+		
 		// should baud_select_table be a register?
-		always @(posedge reset)
-			begin
-				 baud_select_table[0]<= 18'b101000101100001011;
-				 baud_select_table[1]<= 18'b001010001011000011;
-				 baud_select_table[2]<= 18'b000010100010110001;
-				 baud_select_table[3]<= 18'b000001010001011000;
-				 baud_select_table[4]<= 18'b000000101000101100;
-				 baud_select_table[5]<= 18'b000000010100010110;
-				 baud_select_table[6]<= 18'b000000001101100100;
-				 baud_select_table[7]<= 18'b000000000110110010;
-		end
+		// should be register, compiler will  make the correct choice and put it into blockrams
+		
+//		initial
+//			begin
+//				 baud_select_table[0]<= 18'b101000101100001011;
+//				 baud_select_table[1]<= 18'b001010001011000011;
+//				 baud_select_table[2]<= 18'b000010100010110001;
+//				 baud_select_table[3]<= 18'b000001010001011000;
+//				 baud_select_table[4]<= 18'b000000101000101100;
+//				 baud_select_table[5]<= 18'b000000010100010110;
+//				 baud_select_table[6]<= 18'b000000001101100100;
+//				 baud_select_table[7]<= 18'b000000000110110010;
+//			end
 		
 //It works but why does my sample_ENABLE have to be a register? 
-//		always @(*)
-//			case(baud_select)
-//				0: sample_ENABLE= &(counter^~18'b101000101100001011);
-//				1: sample_ENABLE= &(counter^~18'b001010001011000011);
-//				2: sample_ENABLE= &(counter^~18'b000010100010110001);
-//				3: sample_ENABLE= &(counter^~18'b000001010001011000);
-//				4: sample_ENABLE= &(counter^~18'b000000101000101100);
-//				5: sample_ENABLE= &(counter^~18'b000000010100010110);
-//				6: sample_ENABLE= &(counter^~18'b000000001101100100);
-//				7: sample_ENABLE= &(counter^~18'b000000000110110010);
-//				default sample_ENABLE=0;
-//			endcase
+		always @(*)
+			case(baud_select)
+				0: sample_ENABLE= &(counter^~18'b101000101100001011);
+				1: sample_ENABLE= &(counter^~18'b001010001011000011);
+				2: sample_ENABLE= &(counter^~18'b000010100010110001);
+				3: sample_ENABLE= &(counter^~18'b000001010001011000);
+				4: sample_ENABLE= &(counter^~18'b000000101000101100);
+				5: sample_ENABLE= &(counter^~18'b000000010100010110);
+				6: sample_ENABLE= &(counter^~18'b000000001101100100);
+				7: sample_ENABLE= &(counter^~18'b000000000110110010);
+				default sample_ENABLE=0;
+			endcase
 		
 		
 		

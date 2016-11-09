@@ -42,11 +42,11 @@ initial begin
 	#100 reset = 0;
 	
 	#100000 reset = 1;
-	baud_select=2;
+	baud_select=6;
 	#100 reset = 0;
 	
 	#100000 reset = 1;
-	baud_select=3;
+	baud_select=5;
 	#100 reset = 0;
 	
 		
@@ -55,7 +55,19 @@ initial begin
 	#100 reset = 0;
 	
 	#100000 reset = 1;
-	baud_select=5;
+	baud_select=3;
+	#100 reset = 0;
+	
+	#100000 reset = 1;
+	baud_select=2;
+	#100 reset = 0;
+	
+	#100000 reset = 1;
+	baud_select=1;
+	#100 reset = 0;
+	
+	#100000 reset = 1;
+	baud_select=0;
 	#100 reset = 0;
 	
 	#100000 $finish;	
