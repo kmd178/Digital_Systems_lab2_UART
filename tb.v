@@ -38,27 +38,27 @@ systemUART sys0(
 initial begin
 	clk=0;
 	reset = 1;
-	baud_select=0;
+	baud_select=7;
 	#100 reset = 0;
 	
-	#1000 reset = 1;
+	#100000 reset = 1;
 	baud_select=2;
 	#100 reset = 0;
 	
-	#1000 reset = 1;
+	#100000 reset = 1;
 	baud_select=3;
 	#100 reset = 0;
 	
 		
-	#1000 reset = 1;
+	#100000 reset = 1;
 	baud_select=4;
 	#100 reset = 0;
 	
-	#1000 reset = 1;
+	#100000 reset = 1;
 	baud_select=5;
 	#100 reset = 0;
 	
-	#10000 $finish;	
+	#100000 $finish;	
 
 end
 	
