@@ -28,11 +28,17 @@ reg [2:0] baud_select;
 //);//
 
 
+
 systemUART sys0(
 	.reset(reset),
 	.clk(clk),
 	.baud_select(baud_select),
-	.sample_ENABLE(sample_ENABLE)
+	.Tx_DATA(Tx_DATA)
+	.Tx_EN(Tx_EN),
+	.Tx_WR(Tx_WR),
+	.sample_ENABLE(sample_ENABLE),
+	.TxD(TxD),
+	.Tx_BUSY(Tx_BUSY)
 );
 	
 initial begin
