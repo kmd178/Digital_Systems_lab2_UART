@@ -26,7 +26,7 @@ module tb;
 //	.stabilizedButton(stabilizedButton)
 //);//
 
-reg reset,clk,BTN2;
+reg reset,clk,BTN2,clk2;
 reg [2:0] baud_select;
 reg [7:0] Tx_DATA;
 reg Tx_WR,Tx_EN;
@@ -35,6 +35,7 @@ reg Tx_WR,Tx_EN;
 systemUART sys0(
 	.reset(reset),
 	.clk(clk),
+	.clk2(clk2),
 	.baud_select(baud_select),
 	.Tx_DATA(Tx_DATA),
 	.Tx_EN(Tx_EN),
@@ -73,5 +74,7 @@ initial begin
 end
 	
 always #10 clk = ~ clk;
+
+always #20 clk2 = ~ clk2;
 
 endmodule

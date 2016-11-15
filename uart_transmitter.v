@@ -9,7 +9,7 @@ input Tx_WR,				//It becomes 1 for one cycle to signal that data is ready to be 
 output reg TxD,					//Output bit
 output reg Tx_BUSY);			//Signals 1 if the module is actively transmitting a bitstream
 
-baud_rate_sampler baud_controller_tx_instance(reset, clk, baud_select, Tx_sample_ENABLE);
+baud_rate_sampler_transmitter baud_controller_tx_instance(reset, clk, baud_select, Tx_sample_ENABLE);
 
 wire Offstate= reset | (~Tx_EN); //Reset has the same exact use as ~Tx_EN in the current implementation
 
@@ -69,11 +69,5 @@ always @(*)
 		9: TxD= ^Tx_DATA;      //parity_bit
 		10: TxD= 1;            //stop_bit
 		default: TxD= 1; //NEVER ACCESSED:Necessary for compiler not to make a latch
-//		11: TxD= 1;            //NEVER ACCESSED:Necessary for compiler not to make a latch
-//		12: TxD= 1;            //stop_bit
-//		13: TxD= 1;            //stop_bit
-//		14: TxD= 1;            //stop_bit
-//		15: TxD= 1;            //stop_bit
-//		16: TxD= 1;            //stop_bit
 	endcase
 endmodule

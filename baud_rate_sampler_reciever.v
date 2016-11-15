@@ -1,3 +1,6 @@
+`timescale 1ns / 1ps
+module baud_rate_sampler_receiver(
+    );
 module baud_rate_sampler_transmitter(  ///have to implement different for reciever and transmitter, with different adders and clocks.
 		input reset,
 		input clk,
@@ -5,10 +8,9 @@ module baud_rate_sampler_transmitter(  ///have to implement different for reciev
 		output reg sample_ENABLE
     );
 	 
-
 	 
 		//We assume assume that a maximum possible FPGA clock used is 1ghz.(30bits)
-//		parameter systemclockfrequency= 50000000;  //must be changed according to the FPGA system used.
+//		parameter systemclockfrequency= 25000000;  //must be changed according to the FPGA system used.
 //		parameter Clocks_Baud_Rate_8= systemclockfrequency/115200; //The floating part of the division is lost, leading to an error in the calculation of the actual rate
 //		parameter Clocks_Baud_Rate_7= systemclockfrequency/57600;  //The greater the bitrate, the bigger the error leading to an out of sync function
 //		parameter Clocks_Baud_Rate_6= systemclockfrequency/38400;
@@ -20,15 +22,15 @@ module baud_rate_sampler_transmitter(  ///have to implement different for reciev
 //		reg counter[21:0];
 
 
-//		parameter systemclockfrequency= 50000000;  //must be changed according to the FPGA system used.
-//		parameter Clocks_Baud_Rate_8= 000000000110110010;   //434.027777778 clocks until enable signal sent
-//		parameter Clocks_Baud_Rate_7= 000000001101100100;   //868.055555556
-//		parameter Clocks_Baud_Rate_6= 000000010100010110;   //1302.08333333
-//		parameter Clocks_Baud_Rate_5= 000000101000101100;   //2604.16666667
-//		parameter Clocks_Baud_Rate_4= 000001010001011000;   //5208.33333333
-//		parameter Clocks_Baud_Rate_3= 000010100010110001;   //10416.6666667
-//		parameter Clocks_Baud_Rate_2= 001010001011000011;   //41666.6666667
-//		parameter Clocks_Baud_Rate_1= 101000101100001011; 	 //166666.666667 
+//		parameter systemclockfrequency= 25000000;  //must be changed according to the FPGA system used.
+//		parameter Clocks_Baud_Rate_8= 000000000000110110;   //434.027777778/8 clocks until enable signal sent
+//		parameter Clocks_Baud_Rate_7= 000000000001101100;   //868.055555556/8
+//		parameter Clocks_Baud_Rate_6= 000000000010100010;   //1302.08333333/8
+//		parameter Clocks_Baud_Rate_5= 000000000101000101;   //2604.16666667/8
+//		parameter Clocks_Baud_Rate_4= 000000001010001011;   //5208.33333333/8
+//		parameter Clocks_Baud_Rate_3= 000000010100010110;   //10416.6666667/8
+//		parameter Clocks_Baud_Rate_2= 000001010001011000;   //41666.6666667/8
+//		parameter Clocks_Baud_Rate_1= 000101000101100001; 	 //166666.666667/8
 		reg [17:0] counter; // TOTAL OF 18 BINARY CHARACTERS TO represent integer part of Clocks_Baud_Rate_1
 
 		
@@ -42,48 +44,17 @@ module baud_rate_sampler_transmitter(  ///have to implement different for reciev
 					counter<=counter+ 1'b1;
 			end
 			
-			//Implementation without using a register for sample_Enable.
-						//reg [17:0] baud_select_table [7:0];
-						//	wire sample_Enable = & (counter ^~ baud_select_table[baud_select]) ;
-								
-						// why cant i assign memory using always @(*)??????????.
-						// because it referes to all possible left hand side changes, 
-						// which i dont have any because they are constants, so which block is never accesed.
-								
-						// should baud_select_table be a register??????????????.
-						// should be a register, compiler will  make the correct choice and put it into blockrams
-								
-						//		initial
-						//			begin
-						//				 baud_select_table[0]<= 18'b101000101100001011;
-						//				 baud_select_table[1]<= 18'b001010001011000011;
-						//				 baud_select_table[2]<= 18'b000010100010110001;
-						//				 baud_select_table[3]<= 18'b000001010001011000;
-						//				 baud_select_table[4]<= 18'b000000101000101100;
-						//				 baud_select_table[5]<= 18'b000000010100010110;
-						//				 baud_select_table[6]<= 18'b000000001101100100;
-						//				 baud_select_table[7]<= 18'b000000000110110010;
-						//			end
-		
-//It works but why does my sample_ENABLE have to be a register? ???????????.
-////Because its in the left hand side of an always block
-
-//Is "Implementation without using a register for sample_Enable." going to improve anything??????
-//Uncertain-Unclear, The delay itself that expresses registers is implemented with buffers.
-//Implementing sample_Enable as a wire could improve the design in certain situations.
-
-//Is the following command: sample_ENABLE=&(counter^~18'b000000000110110010);  the best way to implement comparison between 2 bitstreams?
 
 		always @(*)
 			case(baud_select)
-				0: sample_ENABLE= &(counter^~18'b101000101100001011);
-				1: sample_ENABLE= &(counter^~18'b001010001011000011);
-				2: sample_ENABLE= &(counter^~18'b000010100010110001);
-				3: sample_ENABLE= &(counter^~18'b000001010001011000);
-				4: sample_ENABLE= &(counter^~18'b000000101000101100);
-				5: sample_ENABLE= &(counter^~18'b000000010100010110);
-				6: sample_ENABLE= &(counter^~18'b000000001101100100);
-				7: sample_ENABLE= &(counter^~18'b000000000110110010);
+				0: sample_ENABLE= &(counter^~18'b000101000101100001);
+				1: sample_ENABLE= &(counter^~18'b000001010001011000);
+				2: sample_ENABLE= &(counter^~18'b000000010100010110);
+				3: sample_ENABLE= &(counter^~18'b000000001010001011);
+				4: sample_ENABLE= &(counter^~18'b000000000101000101);
+				5: sample_ENABLE= &(counter^~18'b000000000010100010);
+				6: sample_ENABLE= &(counter^~18'b000000000001101100);
+				7: sample_ENABLE= &(counter^~18'b000000000000110110);
 				default sample_ENABLE=0;
 			endcase
 		
@@ -124,5 +95,8 @@ module baud_rate_sampler_transmitter(  ///have to implement different for reciev
 						//					//
 						//					7: baudrate_subdivision= 115200*2^18/systemclockfrequency;
 						//				endcase
+
+endmodule
+
 
 endmodule

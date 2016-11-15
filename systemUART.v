@@ -2,6 +2,7 @@
 module systemUART(
 	input reset,
 	input clk,
+	input clk2,
 	input [2:0] baud_select,
 	input [7:0] Tx_DATA,
 	input Tx_EN,
@@ -34,6 +35,7 @@ module systemUART(
 
 
 uart_transmitter kmd2_1(reset,clk,Tx_DATA,baud_select,Tx_EN,Tx_WR,TxD,Tx_BUSY);
+uart_receiver kmd2_2(reset,clk2,Rx_DATA,baud_select,Rx_EN,RxD,Rx_FERROR,Rx_PERROR, Rx_VALID);
 //anti_bounce_reset kmd2(clk, reset, stabilizedRESET);
 //anti_bounce kmd3(clk, reset , BTN2, stabilizedButton);
 //ledDataFeeder kmd1(CLKDV,stabilizedRESET,stabilizedButton,char,an0,an1,an2,an3);
