@@ -12,59 +12,50 @@ module uart_receiver(
 
 baud_rate_sampler_transmitter baud_controller_rx_instance(reset, clk, baud_select, Rx_sample_ENABLE);
 
-wire Offstate= reset | (~Rx_EN); //Reset has the same exact use as ~Tx_EN in the current implementation
-
-
-reg start_bit_has_been_recieved=1'b0; 
-reg [3:0] samples_counter
+wire Offstate= reset | (~Rx_EN); //Reset has the same exact use as ~Rx_EN in the current implementation
+reg [3:0] samples_counter;
+reg [7:0] TMP_DATA;
+reg TMP_PERROR; 
+reg transmittionFirstSlot=1'b0; //Flags the state which the samples_counter is currently counting samples in the first Slot
 
 always @(posedge Rx_sample_ENABLE)
-	if (start_bit_has_been_recieved==0 | RxD==0)
-		samples_counter==7;  //might need to be 6 instead
+	if ( (bit_slot==10 & RxD==0 & transmittionFirstSlot==0) | (bit_slot==11 & RxD==0 & transmittionFirstSlot==0) )
+		samples_counter=7;  //might need to be 6 instead
 	else
 		samples_counter= samples_counter+1;
 
-wire middleSlot_sample=& samples_counter
+wire middleSlot_sample=& samples_counter;
 	
-	
-always @(posedge Rx_sample_ENABLE)  
-	begin
-		if (bit_slot==0 & RxD==0)    								
-			start_bit_has_been_recieved<=1'b1;    
-		else if (bit_slot==10)
-			start_bit_has_been_recieved<=1'b0; 									
-	end
+always @(posedge Rx_sample_ENABLE)
+	if ( (bit_slot==10 & RxD==0 & transmittionFirstSlot==0) | (bit_slot==11 & RxD==0 & transmittionFirstSlot==0) )
+		transmittionFirstSlot=1'b1;
+	else if (middleSlot_sample)
+		transmittionFirstSlot=1'b0;
 
 ///////////////////////////////////////////////////////////////////////bit_slot
 reg [3:0] bit_slot;
 always @(posedge middleSlot_sample, posedge Offstate) 
-		if (Offstate) 
+	begin
+		if (Offstate | (bit_slot==10 & RxD==0) | (bit_slot==11 & RxD==0)) 
 			bit_slot<=0;
-		else if (start_bit_has_been_recieved==1'b1) 
-			begin
-				if (bit_slot==10) 
-					bit_slot<=0;
-				else
-					bit_slot<=bit_slot+1'b1; 
-			end
+		else if (~(bit_slot==11))
+			bit_slot<=bit_slot+1'b1; 
+	end
 ///////////////////////////////////////////////////bit_slot
 
-
-
-always @(posedge start_bit_has_been_recieved, posedge Offstate)  
+always @(posedge clk)
 	begin
-		if (Offstate)
-			Tx_BUSY<=1'b0;	
-		else 
-			if (myNextBitstreamISready & (bit_slot==9 | bit_slot==10)) 	
-				Tx_BUSY<=1'b1;			
-			else if (bit_slot==9)
-				Tx_BUSY<=1'b0;		
+		if (bit_slot==10)
+			begin
+				RxD<=TMP_DATA;				
+				Rx_PERROR<=TMP_PERROR;
+				Rx_VALID<=(TMP_PERROR | TMP_FERROR);
+			end
 	end
 
 always @(*)
 	case(bit_slot)
-		0: TxD= 0;             //start bit
+		//0:  				          //start bit
 		1:  TMP_DATA[0]=RxD;    //0
 		2:  TMP_DATA[1]=RxD;    //1
 		3:  TMP_DATA[2]=RxD;    //2
@@ -73,9 +64,9 @@ always @(*)
 		6:  TMP_DATA[5]=RxD;    //5
 		7:  TMP_DATA[6]=RxD;    //6
 		8:  TMP_DATA[7]=RxD;    //7
-		9: Rx_PERROR= (RxD==^TMP_DATA);   //parity_bit
+		9:  TMP_PERROR= (RxD==^TMP_DATA);   //parity_bit
 		10: Rx_FERROR= ~RxD;            //stop_bit should be 1, if its 0 then there is an error
-		//default: Rx_FERROR= 1; //NEVER ACCESSED:Necessary for compiler not to make a latch
+		//default:  //NEVER ACCESSED:Necessary for compiler not to make a latch
 	endcase
 
 endmodule
