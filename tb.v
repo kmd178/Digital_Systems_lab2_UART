@@ -2,8 +2,7 @@
 
 module tb;
 
-reg reset,clk,BTN2;
-reg [2:0] baud_select;
+
 //wire a,b,c,d,e,f,g,dp,CLKDV;
 
 //FourDigitLEDdriver sys0(
@@ -27,56 +26,49 @@ reg [2:0] baud_select;
 //	.stabilizedButton(stabilizedButton)
 //);//
 
+reg reset,clk,BTN2;
+reg [2:0] baud_select;
+reg [7:0] Tx_DATA;
+reg Tx_WR,Tx_EN;
 
 
 systemUART sys0(
 	.reset(reset),
 	.clk(clk),
 	.baud_select(baud_select),
-	.Tx_DATA(Tx_DATA)
+	.Tx_DATA(Tx_DATA),
 	.Tx_EN(Tx_EN),
 	.Tx_WR(Tx_WR),
-	.sample_ENABLE(sample_ENABLE),
 	.TxD(TxD),
 	.Tx_BUSY(Tx_BUSY)
 );
+	
+	
 	
 initial begin
 	clk=0;
 	reset = 1;
 	baud_select=7;
-	#100 reset = 0;
+	Tx_EN=1;
 	
-	#100000 reset = 1;
-	baud_select=6;
-	#100 reset = 0;
 	
-	#100000 reset = 1;
-	baud_select=5;
+	Tx_DATA=8'b10110101;
+
 	#100 reset = 0;
+	Tx_WR=1;
+	#10 Tx_WR=0;
+
+	#99240
+	//Tx_WR is validly activated by the system during the transmition of the parity bit as well (bit_slot 9) time=99240
+	Tx_DATA=8'b11101110;
+	Tx_WR=1;
+	#10 Tx_WR=0;
 	
-		
-	#100000 reset = 1;
-	baud_select=4;
-	#100 reset = 0;
 	
-	#100000 reset = 1;
-	baud_select=3;
-	#100 reset = 0;
+	#100000 Tx_EN = 0;
 	
-	#100000 reset = 1;
-	baud_select=2;
-	#100 reset = 0;
-	
-	#100000 reset = 1;
-	baud_select=1;
-	#100 reset = 0;
-	
-	#100000 reset = 1;
-	baud_select=0;
-	#100 reset = 0;
-	
-	#100000 $finish;	
+
+	#10000 $finish;	
 
 end
 	

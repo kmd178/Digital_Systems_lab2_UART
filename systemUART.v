@@ -6,7 +6,6 @@ module systemUART(
 	input [7:0] Tx_DATA,
 	input Tx_EN,
 	input Tx_WR,
-	output sample_ENABLE,
 	output TxD,	
 	output Tx_BUSY
 //	input BTN2,
@@ -35,7 +34,6 @@ module systemUART(
 
 
 uart_transmitter kmd2_1(reset,clk,Tx_DATA,baud_select,Tx_EN,Tx_WR,TxD,Tx_BUSY);
-baud_rate_sampler kmd2_1(reset,clk,baud_select,sample_ENABLE);
 //anti_bounce_reset kmd2(clk, reset, stabilizedRESET);
 //anti_bounce kmd3(clk, reset , BTN2, stabilizedButton);
 //ledDataFeeder kmd1(CLKDV,stabilizedRESET,stabilizedButton,char,an0,an1,an2,an3);
