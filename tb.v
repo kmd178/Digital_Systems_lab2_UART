@@ -37,10 +37,10 @@ systemUART sys0(
 	.reset(reset),
 	.clk(clk),
 	.clk2(clk2),
-	.baud_select(baud_select),
-	.Tx_DATA(Tx_DATA),
+//.baud_select(baud_select),
+	//.Tx_DATA(Tx_DATA),
 	.Tx_EN(Tx_EN),
-	.Tx_WR(Tx_WR),
+//	.Tx_WR(Tx_WR),
 	.Rx_EN(Rx_EN),
 	.Rx_DATA(Rx_DATA),
 	.Rx_FERROR(Rx_FERROR), 
@@ -52,14 +52,15 @@ systemUART sys0(
 	
 	
 initial begin
-	clk=0;
-	clk2=0;
-	reset = 1;
-	baud_select=7;
-	Tx_EN=1;
-	Rx_EN=1;
+	clk=0;////
+	clk2=0;///
+	reset = 1;////
+	baud_select=7;////
+	Tx_EN=1;///
+	Rx_EN=1;///
 	
 	
+	////////////////////////
 	Tx_DATA=8'b10101010;
 
 	#100 reset = 0;

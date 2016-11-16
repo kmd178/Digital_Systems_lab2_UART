@@ -4,7 +4,7 @@ module LEDdecoder(
 	input [3:0] char,
 	output reg [7:0] LED
 );
-always @(*)
+always @(*) //
 	case(char)
 	  0: LED = 8'b00000011; //0//
 	  1: LED = 8'b10011111; //1//
@@ -20,7 +20,7 @@ always @(*)
 	  11: LED = 8'b11000001; //b
 	  12: LED = 8'b01100011; //C
 	  13: LED = 8'b10000101; //d
-	  14: LED = 8'b01100001; //E
+	  14: LED = 8'b01100001; //E 
 	  15: LED = 8'b01110001; //F//
 	  default: LED = 8'b0000000;
 endcase
