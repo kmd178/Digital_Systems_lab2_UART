@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+	`timescale 1ns / 1ps
 
 module tb;
 
@@ -31,6 +31,7 @@ reg [2:0] baud_select;
 reg [7:0] Tx_DATA;
 reg Tx_WR,Tx_EN,Rx_EN;
 
+wire [7:0] Rx_DATA;
 
 systemUART sys0(
 	.reset(reset),
@@ -59,18 +60,31 @@ initial begin
 	Rx_EN=1;
 	
 	
-	Tx_DATA=8'b10110101;
+	Tx_DATA=8'b10101010;
 
 	#100 reset = 0;
 	Tx_WR=1;
 	#10 Tx_WR=0;
 
-	#99240
+	#199240
 	//Tx_WR is validly activated by the system during the transmition of the parity bit as well (bit_slot 9) time=99240
-	Tx_DATA=8'b11101110;
+	Tx_DATA=8'b01010101;
 	Tx_WR=1;
 	#10 Tx_WR=0;
 	
+	
+	#99240
+	//Tx_WR is validly activated by the system during the transmition of the parity bit as well (bit_slot 9) time=99240
+	Tx_DATA=8'b11001100;
+	Tx_WR=1;
+	#10 Tx_WR=0;
+	
+	
+	#99240
+	//Tx_WR is validly activated by the system during the transmition of the parity bit as well (bit_slot 9) time=99240
+	Tx_DATA=8'b10001001;
+	Tx_WR=1;
+	#10 Tx_WR=0;
 	
 	#100000 Tx_EN = 0;
 	
@@ -81,6 +95,6 @@ end
 	
 always #10 clk = ~ clk;
 
-always #10 clk2 = ~ clk2;
+always #23 clk2 = ~ clk2;
 
 endmodule

@@ -13,14 +13,14 @@ module uart_receiver(
 baud_rate_sampler_receiver baud_controller_rx_instance(reset, clk, baud_select, Rx_sample_ENABLE);
 
 wire Offstate= reset | (~Rx_EN); //Reset has the same exact use as ~Rx_EN in the current implementation
-reg [3:0] samples_counter;
+reg [3:0] samples_counter=0;
 reg [7:0] TMP_DATA;
 reg TMP_PERROR; 
 reg transmittionFirstSlot=1'b0; //Flags the state which the samples_counter is currently counting samples in the first Slot
-reg [3:0] bit_slot=11;
+reg [3:0] bit_slot=10;
 
 always @(posedge Rx_sample_ENABLE)
-	if ( (bit_slot==10 & RxD==0 & transmittionFirstSlot==0) | (bit_slot==11 & RxD==0 & transmittionFirstSlot==0) )
+	if ( bit_slot==10 & RxD==0 & transmittionFirstSlot==0 )
 		samples_counter<=7;  //might need to be 6 instead
 	else
 		samples_counter<= samples_counter+1;
@@ -28,48 +28,52 @@ always @(posedge Rx_sample_ENABLE)
 wire middleSlot_sample=& samples_counter;
 	
 always @(posedge Rx_sample_ENABLE)
-	if ( (bit_slot==10 & RxD==0 & transmittionFirstSlot==0) | (bit_slot==11 & RxD==0 & transmittionFirstSlot==0) )
+	if ( bit_slot==10 & RxD==0 & transmittionFirstSlot==0 )
 		transmittionFirstSlot=1'b1;
 	else if (middleSlot_sample)
 		transmittionFirstSlot=1'b0;
-
+		
+wire TMP_DATA_PARITY=^TMP_DATA;
 ///////////////////////////////////////////////////////////////////////bit_slot
-
+//reg [3:0] 	DUMP_VARIABLE;
 always @(posedge middleSlot_sample, posedge Offstate) 
 	begin
 		if (Offstate)
 			begin
-				bit_slot<=11;
+				//DUMP_VARIABLE=1;
+				bit_slot<=10;
 				TMP_DATA<=0;
 				TMP_PERROR<=0;
 				Rx_PERROR<=0;
 				Rx_FERROR<=0;
 				Rx_VALID<=0;
 			end
-		else if ((bit_slot==10 & RxD==0) | (bit_slot==11 & RxD==0)) 
+		else if (bit_slot==10 & RxD==0) 
 			begin
+				//DUMP_VARIABLE=2;
 				bit_slot<=0;
 				TMP_DATA<=0;
 				TMP_PERROR<=0;
 			end
-		else if (bit_slot==9)
+		else if (bit_slot==8)
 			begin
-				TMP_PERROR<=RxD;
+				//DUMP_VARIABLE=3;
+				TMP_PERROR<= ~(RxD==TMP_DATA_PARITY); //XAND: If not similar -> 1
 				bit_slot<=bit_slot+1'b1; 
 			end
-		else if (bit_slot==10 )
+		else if (bit_slot==9)
 			begin
+				//DUMP_VARIABLE=4;
 				bit_slot<=bit_slot+1'b1;
 				Rx_DATA<=TMP_DATA;				
 				Rx_PERROR<=TMP_PERROR;
-				Rx_FERROR<=RxD;
-				Rx_VALID<=(TMP_PERROR | RxD);
+				Rx_FERROR<=~RxD;
+				Rx_VALID<= ~(TMP_PERROR | ~RxD);
 			end
-		else if (bit_slot==1)
-				bit_slot<=bit_slot+1'b1; 
-		else if (~(bit_slot==11))
+		else if (~(bit_slot==10))
 			begin
-				TMP_DATA<=TMP_DATA<<1+RxD;
+				//DUMP_VARIABLE=5;
+				TMP_DATA[bit_slot]<= RxD;
 				bit_slot<=bit_slot+1'b1; 
 			end
 	end

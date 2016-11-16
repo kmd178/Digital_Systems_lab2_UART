@@ -10,10 +10,10 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="24" />
-   <wvobject fp_name="/tb/Rx_DATA" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">Rx_DATA</obj_property>
-      <obj_property name="ObjectShortName">Rx_DATA</obj_property>
+   <WVObjectSize size="26" />
+   <wvobject fp_name="/tb/Rx_DATA" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">Rx_DATA[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Rx_DATA[7:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/Rx_FERROR" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">Rx_FERROR</obj_property>
@@ -92,20 +92,35 @@
       <obj_property name="ObjectShortName">Offstate</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/sys0/kmd2_2/bit_slot" type="array" db_ref_id="1">
+      <obj_property name="DisplayName">label</obj_property>
       <obj_property name="ElementShortName">bit_slot[3:0]</obj_property>
       <obj_property name="ObjectShortName">bit_slot[3:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="label">Rx_bit_slot[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_1/bit_slot" type="array" db_ref_id="1">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">bit_slot[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bit_slot[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="label">Tx_bit_slot[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/sys0/kmd2_2/TMP_DATA" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">TMP_DATA[7:0]</obj_property>
       <obj_property name="ObjectShortName">TMP_DATA[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/sys0/kmd2_2/TMP_PERROR" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">TMP_PERROR</obj_property>
       <obj_property name="ObjectShortName">TMP_PERROR</obj_property>
    </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/TMP_DATA_PARITY" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">TMP_DATA_PARITY</obj_property>
+      <obj_property name="ObjectShortName">TMP_DATA_PARITY</obj_property>
+   </wvobject>
    <wvobject fp_name="/tb/sys0/kmd2_2/samples_counter" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">samples_counter[3:0]</obj_property>
       <obj_property name="ObjectShortName">samples_counter[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>
