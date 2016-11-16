@@ -29,7 +29,7 @@ module tb;
 reg reset,clk,BTN2,clk2;
 reg [2:0] baud_select;
 reg [7:0] Tx_DATA;
-reg Tx_WR,Tx_EN;
+reg Tx_WR,Tx_EN,Rx_EN;
 
 
 systemUART sys0(
@@ -40,7 +40,11 @@ systemUART sys0(
 	.Tx_DATA(Tx_DATA),
 	.Tx_EN(Tx_EN),
 	.Tx_WR(Tx_WR),
-	.TxD(TxD),
+	.Rx_EN(Rx_EN),
+	.Rx_DATA(Rx_DATA),
+	.Rx_FERROR(Rx_FERROR), 
+	.Rx_PERROR(Rx_PERROR),
+	.Rx_VALID(Rx_VALID),
 	.Tx_BUSY(Tx_BUSY)
 );
 	
@@ -48,9 +52,11 @@ systemUART sys0(
 	
 initial begin
 	clk=0;
+	clk2=0;
 	reset = 1;
 	baud_select=7;
 	Tx_EN=1;
+	Rx_EN=1;
 	
 	
 	Tx_DATA=8'b10110101;
@@ -75,6 +81,6 @@ end
 	
 always #10 clk = ~ clk;
 
-always #20 clk2 = ~ clk2;
+always #10 clk2 = ~ clk2;
 
 endmodule

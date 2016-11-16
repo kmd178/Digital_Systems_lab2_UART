@@ -7,7 +7,11 @@ module systemUART(
 	input [7:0] Tx_DATA,
 	input Tx_EN,
 	input Tx_WR,
-	output TxD,	
+	input Rx_EN,
+	output [7:0] Rx_DATA,
+	output Rx_FERROR,
+	output Rx_PERROR,
+	output Rx_VALID,
 	output Tx_BUSY
 //	input BTN2,
 //	output an3,
@@ -33,9 +37,12 @@ module systemUART(
 //wire CLK0;
 //assign {a,b,c,d,e,f,g,dp}=Led; //Dividing the 8 bit decoded output to the assigned segment registers that control the LED character displayed
 
+wire RxD=TxD;
+
+
 
 uart_transmitter kmd2_1(reset,clk,Tx_DATA,baud_select,Tx_EN,Tx_WR,TxD,Tx_BUSY);
-uart_receiver kmd2_2(reset,clk2,Rx_DATA,baud_select,Rx_EN,RxD,Rx_FERROR,Rx_PERROR, Rx_VALID);
+uart_receiver kmd2_2(reset,clk2,baud_select,Rx_EN,RxD,Rx_DATA,Rx_FERROR,Rx_PERROR, Rx_VALID);
 //anti_bounce_reset kmd2(clk, reset, stabilizedRESET);
 //anti_bounce kmd3(clk, reset , BTN2, stabilizedButton);
 //ledDataFeeder kmd1(CLKDV,stabilizedRESET,stabilizedButton,char,an0,an1,an2,an3);

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/kmd17/Documents/GitHub/Digital_Systems_lab2_UART/tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="24" />
+   <wvobject fp_name="/tb/Rx_DATA" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Rx_DATA</obj_property>
+      <obj_property name="ObjectShortName">Rx_DATA</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/Rx_FERROR" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Rx_FERROR</obj_property>
+      <obj_property name="ObjectShortName">Rx_FERROR</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/Rx_PERROR" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Rx_PERROR</obj_property>
+      <obj_property name="ObjectShortName">Rx_PERROR</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/Rx_VALID" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Rx_VALID</obj_property>
+      <obj_property name="ObjectShortName">Rx_VALID</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/Tx_BUSY" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Tx_BUSY</obj_property>
+      <obj_property name="ObjectShortName">Tx_BUSY</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/BTN2" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">BTN2</obj_property>
+      <obj_property name="ObjectShortName">BTN2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/clk2" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk2</obj_property>
+      <obj_property name="ObjectShortName">clk2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/baud_select" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">baud_select[2:0]</obj_property>
+      <obj_property name="ObjectShortName">baud_select[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/Tx_DATA" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">Tx_DATA[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Tx_DATA[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/Tx_WR" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Tx_WR</obj_property>
+      <obj_property name="ObjectShortName">Tx_WR</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/Tx_EN" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Tx_EN</obj_property>
+      <obj_property name="ObjectShortName">Tx_EN</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/Rx_EN" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Rx_EN</obj_property>
+      <obj_property name="ObjectShortName">Rx_EN</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/Rx_sample_ENABLE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Rx_sample_ENABLE</obj_property>
+      <obj_property name="ObjectShortName">Rx_sample_ENABLE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_1/Tx_sample_ENABLE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Tx_sample_ENABLE</obj_property>
+      <obj_property name="ObjectShortName">Tx_sample_ENABLE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/transmittionFirstSlot" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">transmittionFirstSlot</obj_property>
+      <obj_property name="ObjectShortName">transmittionFirstSlot</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/middleSlot_sample" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">middleSlot_sample</obj_property>
+      <obj_property name="ObjectShortName">middleSlot_sample</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/RxD" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">RxD</obj_property>
+      <obj_property name="ObjectShortName">RxD</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/Offstate" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">Offstate</obj_property>
+      <obj_property name="ObjectShortName">Offstate</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/bit_slot" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bit_slot[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bit_slot[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/TMP_DATA" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">TMP_DATA[7:0]</obj_property>
+      <obj_property name="ObjectShortName">TMP_DATA[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/TMP_PERROR" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">TMP_PERROR</obj_property>
+      <obj_property name="ObjectShortName">TMP_PERROR</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/kmd2_2/samples_counter" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">samples_counter[3:0]</obj_property>
+      <obj_property name="ObjectShortName">samples_counter[3:0]</obj_property>
+   </wvobject>
+</wave_config>

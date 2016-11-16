@@ -74,6 +74,8 @@ module baud_rate_sampler_transmitter(  ///have to implement different for reciev
 
 //Is the following command: sample_ENABLE=&(counter^~18'b000000000110110010);  the best way to implement comparison between 2 bitstreams?
 
+
+
 		always @(*)
 			case(baud_select)
 				0: sample_ENABLE= &(counter^~18'b101000101100001011);
@@ -86,6 +88,7 @@ module baud_rate_sampler_transmitter(  ///have to implement different for reciev
 				7: sample_ENABLE= &(counter^~18'b000000000110110010);
 				default sample_ENABLE=0;
 			endcase
+
 		
 		
 		

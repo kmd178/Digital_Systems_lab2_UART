@@ -1,7 +1,5 @@
 `timescale 1ns / 1ps
-module baud_rate_sampler_receiver(
-    );
-module baud_rate_sampler_transmitter(  ///have to implement different for reciever and transmitter, with different adders and clocks.
+module baud_rate_sampler_receiver(  ///have to implement different for reciever and transmitter, with different adders and clocks.
 		input reset,
 		input clk,
 		input [2:0] baud_select,
@@ -44,20 +42,18 @@ module baud_rate_sampler_transmitter(  ///have to implement different for reciev
 					counter<=counter+ 1'b1;
 			end
 			
-
 		always @(*)
 			case(baud_select)
-				0: sample_ENABLE= &(counter^~18'b000101000101100001);
-				1: sample_ENABLE= &(counter^~18'b000001010001011000);
-				2: sample_ENABLE= &(counter^~18'b000000010100010110);
-				3: sample_ENABLE= &(counter^~18'b000000001010001011);
-				4: sample_ENABLE= &(counter^~18'b000000000101000101);
-				5: sample_ENABLE= &(counter^~18'b000000000010100010);
-				6: sample_ENABLE= &(counter^~18'b000000000001101100);
-				7: sample_ENABLE= &(counter^~18'b000000000000110110);
+				0: sample_ENABLE= &(counter^~18'b000010100010110000);
+				1: sample_ENABLE= &(counter^~18'b000000101000101100);
+				2: sample_ENABLE= &(counter^~18'b000000001010001011);
+				3: sample_ENABLE= &(counter^~18'b000000000101000101);
+				4: sample_ENABLE= &(counter^~18'b000000000010100010);
+				5: sample_ENABLE= &(counter^~18'b000000000001010001);
+				6: sample_ENABLE= &(counter^~18'b000000000000110110);
+				7: sample_ENABLE= &(counter^~18'b000000000000011011);
 				default sample_ENABLE=0;
 			endcase
-		
 		
 		
 				//1) Implementation without having Baud_rate preconfigured before the transfer of the bits.
@@ -95,8 +91,5 @@ module baud_rate_sampler_transmitter(  ///have to implement different for reciev
 						//					//
 						//					7: baudrate_subdivision= 115200*2^18/systemclockfrequency;
 						//				endcase
-
-endmodule
-
 
 endmodule
