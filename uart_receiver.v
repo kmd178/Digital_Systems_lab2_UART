@@ -49,12 +49,12 @@ always @(posedge Rx_sample_ENABLE)
 		
 wire TMP_DATA_PARITY=^TMP_DATA;
 ///////////////////////////////////////////////////////////////////////bit_slot
-//reg [3:0] 	DUMP_VARIABLE;
+
 always @(posedge middleSlot_sample, posedge Offstate) 
 	begin
 		if (Offstate)
 			begin
-				//DUMP_VARIABLE=1;
+
 				bit_slot<=10;
 				TMP_DATA<=0;
 				TMP_PERROR<=0;
@@ -64,7 +64,7 @@ always @(posedge middleSlot_sample, posedge Offstate)
 			end
 		else if (bit_slot==10 & RxD==0) 
 			begin
-				//DUMP_VARIABLE=2;
+
 				bit_slot<=0;
 				TMP_DATA<=0;
 				TMP_PERROR<=0;
@@ -72,13 +72,13 @@ always @(posedge middleSlot_sample, posedge Offstate)
 			end
 		else if (bit_slot==8)
 			begin
-				//DUMP_VARIABLE=3;
+
 				TMP_PERROR<= ~(RxD==TMP_DATA_PARITY); //XAND: If not similar -> 1
 				bit_slot<=bit_slot+1'b1; 
 			end
 		else if (bit_slot==9)
 			begin
-				//DUMP_VARIABLE=4;
+
 				bit_slot<=bit_slot+1'b1;
 				Rx_DATA<=TMP_DATA;				
 				Rx_PERROR<=TMP_PERROR;
@@ -87,7 +87,7 @@ always @(posedge middleSlot_sample, posedge Offstate)
 			end
 		else if (~(bit_slot==10))
 			begin
-				//DUMP_VARIABLE=5;
+	
 				TMP_DATA[bit_slot]<= RxD;
 				bit_slot<=bit_slot+1'b1; 
 			end

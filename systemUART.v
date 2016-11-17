@@ -82,6 +82,7 @@ always @(posedge clk, posedge stabilizedRESET_compination)
 
 always @(posedge stabilizedButton, posedge stabilizedRESET)
 	if (stabilizedRESET)
+			baud_select=3'b000;
 	else if (stabilizedButton)
 			baud_select=baud_select+1'b1;
 			
