@@ -10,10 +10,14 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="27" />
+   <WVObjectSize size="24" />
    <wvobject fp_name="/tb/Rx_DATA" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">Rx_DATA[7:0]</obj_property>
       <obj_property name="ObjectShortName">Rx_DATA[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/sys0/Tx_DATA" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">Tx_DATA[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Tx_DATA[7:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/Rx_FERROR" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">Rx_FERROR</obj_property>
@@ -91,32 +95,16 @@
       <obj_property name="ElementShortName">BTN2</obj_property>
       <obj_property name="ObjectShortName">BTN2</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/sys0/kmd2_2/Rx_DATA" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">Rx_DATA[7:0]</obj_property>
-      <obj_property name="ObjectShortName">Rx_DATA[7:0]</obj_property>
+   <wvobject fp_name="/tb/sys0/stabilizedRESET" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">stabilizedRESET</obj_property>
+      <obj_property name="ObjectShortName">stabilizedRESET</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/sys0/Tx_DATA" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">Tx_DATA[7:0]</obj_property>
-      <obj_property name="ObjectShortName">Tx_DATA[7:0]</obj_property>
+   <wvobject fp_name="/tb/sys0/stabilizedButton" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">stabilizedButton</obj_property>
+      <obj_property name="ObjectShortName">stabilizedButton</obj_property>
    </wvobject>
    <wvobject fp_name="/tb/sys0/baud_select" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">baud_select[2:0]</obj_property>
       <obj_property name="ObjectShortName">baud_select[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/sys0/Tx_WR" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">Tx_WR</obj_property>
-      <obj_property name="ObjectShortName">Tx_WR</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/sys0/TxD" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">TxD</obj_property>
-      <obj_property name="ObjectShortName">TxD</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/sys0/RxD" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">RxD</obj_property>
-      <obj_property name="ObjectShortName">RxD</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/sys0/kmd2_2/RxD" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">RxD</obj_property>
-      <obj_property name="ObjectShortName">RxD</obj_property>
    </wvobject>
 </wave_config>

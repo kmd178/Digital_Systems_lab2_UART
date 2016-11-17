@@ -7,8 +7,7 @@ input [2:0] baud_select,//assigns the width of the timeslots bits use to be tran
 input Tx_EN,   			//if its 0 the module is not working SAME AS ~RESET
 input Tx_WR,				//It becomes 1 for one cycle to signal that data is ready to be transmitted
 output reg TxD,					//Output bit
-output reg Tx_BUSY,
-output Tx_sample_ENABLE);			//Signals 1 if the module is actively transmitting a bitstream
+output reg Tx_BUSY);			//Signals 1 if the module is actively transmitting a bitstream
 
 baud_rate_sampler_transmitter baud_controller_tx_instance(reset, clk, baud_select, Tx_sample_ENABLE);
 
@@ -45,7 +44,7 @@ always @(posedge Tx_sample_ENABLE, posedge Tx_WR)
 	end
 
 //Highly unlikely bug, if systems signals Tx_WR in sync with Tx_sample_ENABLE, the transmition will be delayed by 1 slot 
-always @(posedge Tx_sample_ENABLE, posedge Offstate)  
+always @(posedge Tx_sample_ENABLE, posedge Offstate)  ///CHANGED, Tx_sample_ENABLE
 	begin
 		if (Offstate)
 			Tx_BUSY<=1'b0;	

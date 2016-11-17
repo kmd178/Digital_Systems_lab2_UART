@@ -15,10 +15,7 @@ reg [3:0] message1;
 reg [3:0] message2;
 reg [3:0] message3;
 reg [3:0] message4;
-reg [2:0] MemoryCounter=3'b0;  //sketopou@inf.uth.gr
 
-
-reg [21:0] signal_every_second; ////Depending on the FPGA system used. Normally for 50mhz clock divided by 16 on the dcm(period=(2e-8)/16) and for a 1340ms distance between posedges we need 2^22cycles
 always @(posedge Rx_VALID, posedge reset)	
 	begin 
 		if (reset) 

@@ -32,6 +32,7 @@ wire [7:0] Rx_DATA; //
 systemUART sys0(
 	.reset(reset),
 	.clk(clk),
+	.BTN2(BTN2),
 	.Rx_DATA(Rx_DATA),
 	.Rx_FERROR(Rx_FERROR), 
 	.Rx_PERROR(Rx_PERROR),
@@ -54,12 +55,18 @@ systemUART sys0(
 	
 	
 initial begin
+
+	BTN2=0;
 	clk=0;////
-	#100
 	reset = 1;////
 	
 	#10000 reset = 0;
-	
+	#30000000 BTN2=1;	
+	#10000 BTN2=0;
+	#30000000 BTN2=1;
+	#10000 BTN2=0;
+	#30000000 BTN2=1;
+	#10000 BTN2=0;
 //	#1000000 BTN2 = 1;
 //	
 //	#100000 BTN2 = 0;
@@ -72,7 +79,7 @@ initial begin
 //	
 //	#10000 BTN2 = 0;
 
-	#20000000 $stop;	
+	#200000000 $stop;	
 
 end
 	
