@@ -65,7 +65,11 @@ always @(posedge clk)
 
 always @(posedge clk, posedge stabilizedRESET_compination)
 	if (stabilizedRESET_compination)
-		CurrentSymbol=2'b0;
+		begin
+			CurrentSymbol=2'b0;
+			Tx_DATA=message[CurrentSymbol];
+			Tx_WR=1;
+		end
 	else if (change_symbol==1)  ///change to Tx_BUSY AGAIN
 		begin
 			CurrentSymbol=CurrentSymbol+1'b1;
@@ -78,7 +82,6 @@ always @(posedge clk, posedge stabilizedRESET_compination)
 
 always @(posedge stabilizedButton, posedge stabilizedRESET)
 	if (stabilizedRESET)
-			baud_select=3'b110;
 	else if (stabilizedButton)
 			baud_select=baud_select+1'b1;
 			

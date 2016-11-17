@@ -6,7 +6,7 @@ module anti_bounce_reset(
 		output reg stabilized_button
 );
 		//CAREFULL
-		reg [5:0] clk_count=1'b0; //(Depending on the FPGA system used.) For 50mhz clock (period=2e-8) and for a 20ms delay, 20bits give the required 2^20cycles.
+		reg [19:0] clk_count=1'b0; //(Depending on the FPGA system used.) For 50mhz clock (period=2e-8) and for a 20ms delay, 20bits give the required 2^20cycles.
 		wire check; //ClockDividing using AND: When clk_hits 2^20 clock periods CHECK will give me a posedge////
 		reg reset_initialize=1'b1;
 		reg saved_button_state;
