@@ -3,7 +3,6 @@ module uart_receiver(
 	input reset,              //if its 0 the module is not working SAME AS ~RESET
 	input clk,
 	input [2:0] baud_select,  //assigns the width of the timeslots bits use to be transmitted
-	input stabilizedButton,
 	input Rx_EN,      		  //if its 0 the module is not working SAME AS ~RESET
 	input RxD,
 	output reg [7:0] Rx_DATA,
@@ -126,7 +125,7 @@ assign {a,b,c,d,e,f,g,dp}=Led; //Dividing the 8 bit decoded output to the assign
       .RST(reset)        // DCM asynchronous reset input
    );
 
-ledDataFeeder kmd1(CLKDV,reset,stabilizedButton,Rx_DATA,Rx_VALID,char,an0,an1,an2,an3);
+ledDataFeeder kmd1(CLKDV,reset,Rx_DATA,Rx_VALID,char,an0,an1,an2,an3);
 LEDdecoder kmd(char,Led);
 	
 	

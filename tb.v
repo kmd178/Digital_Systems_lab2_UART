@@ -8,7 +8,7 @@ module tb;
 //FourDigitLEDdriver sys0(
 //	.reset(reset),
 //	.clk(clk),
-//	.BTN2(BTN2),
+
 //	.an3(an3),
 //	.an2(an2),
 //	.an1(an1),
@@ -26,76 +26,56 @@ module tb;
 //	.stabilizedButton(stabilizedButton)
 //);//
 
-reg reset,clk,BTN2,clk2;
-reg [2:0] baud_select;
-reg [7:0] Tx_DATA;
-reg Tx_WR,Tx_EN,Rx_EN;
-
-wire [7:0] Rx_DATA;
+reg reset,clk,BTN2;
+wire [7:0] Rx_DATA; //
 
 systemUART sys0(
 	.reset(reset),
 	.clk(clk),
-	.clk2(clk2),
-//.baud_select(baud_select),
-	//.Tx_DATA(Tx_DATA),
-	.Tx_EN(Tx_EN),
-//	.Tx_WR(Tx_WR),
-	.Rx_EN(Rx_EN),
 	.Rx_DATA(Rx_DATA),
 	.Rx_FERROR(Rx_FERROR), 
 	.Rx_PERROR(Rx_PERROR),
 	.Rx_VALID(Rx_VALID),
-	.Tx_BUSY(Tx_BUSY)
+	.Tx_BUSY(Tx_BUSY),
+	.an3(an3),
+	.an2(an2),
+	.an1(an1),
+	.an0(an0),
+	.a(a), 
+	.b(b), 
+	.c(c), 
+	.d(d),
+	.e(e), 
+	.f(f), 
+	.g(g),
+	.dp(dp)
 );
 	
 	
 	
 initial begin
 	clk=0;////
-	clk2=0;///
+	#100
 	reset = 1;////
-	baud_select=7;////
-	Tx_EN=1;///
-	Rx_EN=1;///
 	
+	#10000 reset = 0;
 	
-	////////////////////////
-	Tx_DATA=8'b10101010;
+//	#1000000 BTN2 = 1;
+//	
+//	#100000 BTN2 = 0;
+//
+//	#1000000 BTN2 = 1;
+//	
+//	#100000 BTN2 = 0;
+//	
+//	#1000000 BTN2 = 1;
+//	
+//	#10000 BTN2 = 0;
 
-	#100 reset = 0;
-	Tx_WR=1;
-	#10 Tx_WR=0;
-
-	#199240
-	//Tx_WR is validly activated by the system during the transmition of the parity bit as well (bit_slot 9) time=99240
-	Tx_DATA=8'b01010101;
-	Tx_WR=1;
-	#10 Tx_WR=0;
-	
-	
-	#99240
-	//Tx_WR is validly activated by the system during the transmition of the parity bit as well (bit_slot 9) time=99240
-	Tx_DATA=8'b11001100;
-	Tx_WR=1;
-	#10 Tx_WR=0;
-	
-	
-	#99240
-	//Tx_WR is validly activated by the system during the transmition of the parity bit as well (bit_slot 9) time=99240
-	Tx_DATA=8'b10001001;
-	Tx_WR=1;
-	#10 Tx_WR=0;
-	
-	#100000 Tx_EN = 0;
-	
-
-	#10000 $finish;	
+	#20000000 $stop;	
 
 end
 	
 always #10 clk = ~ clk;
-
-always #23 clk2 = ~ clk2;
 
 endmodule

@@ -3,7 +3,6 @@
 module ledDataFeeder(
 	input clk,
 	input reset,
-	input button,
 	input [7:0] Rx_DATA,
 	input Rx_VALID,
 	output reg [3:0] loadCharLED,
